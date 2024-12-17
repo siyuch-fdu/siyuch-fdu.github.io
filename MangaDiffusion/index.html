@@ -287,7 +287,7 @@
 	<table align=center width=850px>
 		<tr>
 			<td>
-				<b>R1</b>: Results on open-vocabulary COCO benchmark. We evaluate the performance by comparing with existing CLIP-based open-vocabulary object detectors. It is clear that our detector trained on synthetic dataset from <b>InstaGen</b> outperforms existing state-of-the-art approaches significantly, i.e., around 5AP improvement over the second best.
+				<b>R1</b>: Visualization results of MangaDiffuion and other T2I methods. Each row represents a story, and the text above the images shows the number of panels and the corresponding captions for each panel. It can be observed from the figures that our method performs well in terms of panel quantity control and panel layout diversity.
 			</td>
 		</tr>
 	</table>
@@ -307,7 +307,7 @@
 	<table align=center width=850px>
 		<tr>
 			<td>
-				<b>R2</b>: Results on data-sparse object detection. The Faster R-CNN trained with synthetic images achieves consistent improvement across various real training data budgets. Notably, as the availability of real data becomes sparse, synthetic dataset plays even more important role for performance improvement. For instance, <b>InstaGen</b> improves the detector by 5.2 AP (23.3→28.5 AP) when applied to the 10% COCO training subset.
+				<b>R2</b>: Comparison between T2I SOTAs and our proposed MangaDiffusion on Manga109Story test set. The Pixart-$\Sigma$ \cite{chen2024pixart} is fine-tuned using Manga109Story train set for 120 epochs, and the other SOTAs are inference directly without any fine-tuning.
 			</td>
 		</tr>
 	</table>
@@ -316,7 +316,7 @@
 			<tr>
 				<td>
 				<center>
-					<td><img class="round" style="width:350px" src="./resources/data-sparse.png"/></td>
+					<td><img class="round" style="width:350px" src="./resources/tab1.png"/></td>
 				</center>
 				</td>
 			</tr>
