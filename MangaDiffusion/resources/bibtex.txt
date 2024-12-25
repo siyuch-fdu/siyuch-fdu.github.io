@@ -1,4 +1,4 @@
-@inproceedings{feng2024instagen,
+@inproceedings{chen2024mangadiffusion,
     title={Manga Generation via Layout-controllable Diffusion},
     author={Chen, Siyu and Li, Dengjie and Bao, Zenghao and Zhou, Yao and Tan, Lingfeng and Zhong, Yujie and Zhao, Zheng},
     booktitle={arXiv preprint arxiv:2208.12242},
