@@ -130,7 +130,7 @@
 	<title>Manga Generation via Layout-controllable Diffusion</title>
 	<meta property="og:image" content="./resources/fig1.png"/> <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
 	<meta property="og:title" content="Manga Generation via Layout-controllable Diffusion" />
-	<meta property="og:description" content="S. Chen, Y. Zhong, Z. Jie, X. Chu, H. Ren, X. Wei, W. Xie, L. Ma" />
+	<meta property="og:description" content="S. Chen, D. Li, Z. Bao, Y. Zhou, L. Tan, Y. Zhong, Z. Zhao" />
 </head>
 
 <body>
@@ -205,7 +205,7 @@
 				<tr>
 					<span style="font-size:22px">
 						<a href="https://arxiv.org/abs/2402.05937">ArXiv</a> |
-						<a href="https://github.com/fcjian/InstaGen">Code</a> |
+						<a href="https://github.com/siyuch-fdu/MangaDiffusion">Code</a> |
 						<a href="./resources/bibtex.txt">Bibtex</a><br>
 					</span>
 				</tr>
@@ -231,33 +231,11 @@
 		<center><h1>Abstract</h1></center>
 		<tr>
 			<td>
-				Generating comics through text is widely studied. However, there are few studies on generating multi-panel Manga (Japanese comics) solely based on plain text. Japanese manga contains multiple panels on a single page, with characteristics such as coherence in storytelling, reasonable and diverse page layouts, consistency in characters, and semantic correspondence between panel drawings and panel scripts. Therefore, generating manga poses a significant challenge. This paper presents the manga generation task and constructs the Manga109Story dataset for studying manga generation solely from plain text. Additionally, we propose MangaDiffusion to facilitate the intra-panel and inter-panel information interaction during the manga generation process. The results show that our method particularly ensures the number of panels, reasonable and diverse page layouts. Based on our approach, there is potential to converting a large amount of textual stories into more engaging manga readings, leading to significant application prospects. Our code and dataset will be made publicly available soon.
+				We construct the Manga109Story dataset based on existing community work and leveraging the capabilities of multimodal large language model (MLLM). The Manga109 dataset includes basic information such as coordinates of panel, character, face, and text, as well as the text content. The Manga109Dialog dataset associates dialogues with their respective speakers. We utilize a panel order estimator to predict the panel order of each manga page. By combining this information, we create an XML file and input it together with the original manga page into the MLLM for captioning. Ultimately, we obtain captions for each panel and summarize the entire page with a story.
 			</td>
 		</tr>
 	</table>
 	<br>
-
-	<hr>
-	<center><h1>Architecture</h1></center>
-
-	<table align=center width=850px>
-		<tr>
-			<td>
-				To simultaneously generate the images and object bounding boxes, we propose a novel instance-level grounding module, which aligns the text embedding of category name with the regional visual features from image synthesizer, and infers the coordinates for the objects in synthetic images. To further improve the alignment towards objects of arbitrary category, we adopt self-training to tune the grounding module on object categories not existing in the real dataset. As a result, the proposed model, termed as InstaGen, can automatically generate images along with bounding boxes for object instances, and construct synthetic dataset at scale, leading to improved ability when training detectors on it.
-			</td>
-		</tr>
-	</table>
-	<table align=center width=750px>
-		<center>
-			<tr>
-				<td>
-				<center>
-					<td><img class="round" style="width:850px" src="./resources/fig4.bmp"/></td>
-				</center>
-				</td>
-			</tr>
-		</center>
-	</table>
 
 	<hr>
 	<center><h1>Manga109Story Dataset</h1></center>
@@ -282,21 +260,43 @@
 	</table>
 
 	<hr>
+	<center><h1>Architecture</h1></center>
+
+	<table align=center width=850px>
+		<tr>
+			<td>
+				We propose MangaDiffuion to achieve manga generation. During the training stage, we split panel images from a complete manga page. A padding image is added if the number of panels is less than the maximum supported number. These panel images are inputted in batches into a pretrained VAE to obtain the latent representation. Each panel image has a corresponding caption to control its content generation. The transformer block consists of an intra-panel block and an inter-panel block for information interaction. The caption only participates in the computation within the intra-panel block. Timestep $t$ is injected into the model using adaLN-single. The intra-panel mask is used to remove text and speech bubble boxes within the image, while the inter-panel mask is used to mask out the padding images.
+			</td>
+		</tr>
+	</table>
+	<table align=center width=750px>
+		<center>
+			<tr>
+				<td>
+				<center>
+					<td><img class="round" style="width:850px" src="./resources/fig4.bmp"/></td>
+				</center>
+				</td>
+			</tr>
+		</center>
+	</table>
+
+	<hr>
 	<center><h1>Results</h1></center>
 
 	<table align=center width=850px>
 		<tr>
 			<td>
-				<b>R1</b>: Visualization results of MangaDiffuion and other T2I methods. Each row represents a story, and the text above the images shows the number of panels and the corresponding captions for each panel. It can be observed from the figures that our method performs well in terms of panel quantity control and panel layout diversity.
+				<b>R1</b>: Comparison between T2I SOTAs and our proposed MangaDiffusion on Manga109Story test set. The Pixart-Sigma is fine-tuned using Manga109Story train set for 120 epochs, and the other SOTAs are inference directly without any fine-tuning.
 			</td>
 		</tr>
 	</table>
-	<table align=center width=900px>
+	<table align=center width=400px>
 		<center>
 			<tr>
 				<td>
 				<center>
-					<td><img class="round" style="width:900px" src="./resources/fig5.bmp"/></td>
+					<td><img class="round" style="width:400px" src="./resources/tab1.png"/></td>
 				</center>
 				</td>
 			</tr>
@@ -307,16 +307,16 @@
 	<table align=center width=850px>
 		<tr>
 			<td>
-				<b>R2</b>: Comparison between T2I SOTAs and our proposed MangaDiffusion on Manga109Story test set. The Pixart-$\Sigma$ \cite{chen2024pixart} is fine-tuned using Manga109Story train set for 120 epochs, and the other SOTAs are inference directly without any fine-tuning.
+				<b>R2</b>: Visualization results of MangaDiffuion and other T2I methods. Each row represents a story, and the text above the images shows the number of panels and the corresponding captions for each panel. It can be observed from the figures that our method performs well in terms of panel quantity control and panel layout diversity.
 			</td>
 		</tr>
 	</table>
-	<table align=center width=400px>
+	<table align=center width=900px>
 		<center>
 			<tr>
 				<td>
 				<center>
-					<td><img class="round" style="width:400px" src="./resources/tab1.png"/></td>
+					<td><img class="round" style="width:900px" src="./resources/fig5.bmp"/></td>
 				</center>
 				</td>
 			</tr>
