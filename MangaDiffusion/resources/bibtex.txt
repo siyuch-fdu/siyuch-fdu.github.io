@@ -1,6 +1,6 @@
 @inproceedings{feng2024instagen,
-    title={InstaGen: Enhancing Object Detection by Training on Synthetic Dataset},
-    author={Feng, Chengjian and Zhong, Yujie and Jie, Zequn and Xie, Weidi and Ma, Lin},
-    booktitle={Proceedings of the IEEE / CVF Computer Vision and Pattern Recognition},
+    title={Manga Generation via Layout-controllable Diffusion},
+    author={Chen, Siyu and Li, Dengjie and Bao, Zenghao and Zhou, Yao and Tan, Lingfeng and Zhong, Yujie and Zhao, Zheng},
+    booktitle={arXiv preprint arxiv:2208.12242},
     year={2024}
 }
